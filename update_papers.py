@@ -4,6 +4,7 @@ from pylatexenc.latex2text import LatexNodes2Text
 def clean_latex(text):
     if not text:
         return ""
+    # Converts {St\"{u}ckard} to Stückard and removes extra braces
     return LatexNodes2Text().latex_to_text(text)
 
 def generate_html():
@@ -23,7 +24,7 @@ for entry in db.entries:
         # Core Data
         title = clean_latex(entry.get('title', 'No Title'))
         author = clean_latex(entry.get('author', 'Unknown Author'))
-        year = clean_latex(entry.get('year', ''))
+        year = clean_latex(entry.get('year', 'N/A'))
         journal = clean_latex(entry.get('journal', entry.get('booktitle', '')))
         abstract = clean_latex(entry.get('abstract', '')) # Get the abstract
         
@@ -43,15 +44,14 @@ for entry in db.entries:
         if vol: source += f", {vol}"
         if num: source += f"({num})"
         if pages: source += f", pp. {pages}"
-        if year: source += f", {year}"
-	
+
         # Category logic
         category = entry.get('keywords', 'general').lower()
         
         # Generate HTML Block
         item = f'<li class="paper-item" data-category="{category}" data-year="{year}" style="margin-bottom: 25px; list-style: none;">\n'
         item += f'  <div class="title-row"><strong>{title_html}</strong></div>\n'
-        item += f'  <div class="author-row" style="color: #555;">{author}</div>\n'
+        item += f'  <div class="author-row" style="color: #555;">{author} ({year})</div>\n'
         item += f'  <div class="source-row">{source}.</div>\n'
         
         # Add Abstract if it exists
