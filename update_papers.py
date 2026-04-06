@@ -4,7 +4,6 @@ from pylatexenc.latex2text import LatexNodes2Text
 def clean_latex(text):
     if not text:
         return ""
-    # Converts {St\"{u}ckard} to Stückard and removes extra braces
     return LatexNodes2Text().latex_to_text(text)
 
 def generate_html():
@@ -16,24 +15,27 @@ def generate_html():
         print("Error: papers.bib not found.")
         return
 
-    html_output = ""
-    # Sort entries by year descending if possible
+    # Sort entries by year (newest first)
     entries = sorted(db.entries, key=lambda x: x.get('year', '0'), reverse=True)
 
-for entry in db.entries:
-        # Core Data
+    html_output = ""
+    for entry in entries:
+        # Basic metadata
         title = clean_latex(entry.get('title', 'No Title'))
         author = clean_latex(entry.get('author', 'Unknown Author'))
         year = clean_latex(entry.get('year', 'N/A'))
         journal = clean_latex(entry.get('journal', entry.get('booktitle', '')))
-        abstract = clean_latex(entry.get('abstract', '')) # Get the abstract
+        abstract = clean_latex(entry.get('abstract', ''))
         
         # Link Logic
         arxiv_id = entry.get('eprint', '')
         url = entry.get('url', '')
         link = f"https://arxiv.org/abs/{arxiv_id}" if arxiv_id else url
         
-        title_html = f'<a href="{link}" target="_blank" class="paper-title">{title}</a>' if link else title
+        if link:
+            title_html = f'<a href="{link}" target="_blank" class="paper-title">{title}</a>'
+        else:
+            title_html = title
 
         # Bibliographic Details
         vol = entry.get('volume', '')
@@ -45,16 +47,15 @@ for entry in db.entries:
         if num: source += f"({num})"
         if pages: source += f", pp. {pages}"
 
-        # Category logic
+        # Category for filtering
         category = entry.get('keywords', 'general').lower()
         
-        # Generate HTML Block
-        item = f'<li class="paper-item" data-category="{category}" data-year="{year}" style="margin-bottom: 25px; list-style: none;">\n'
+        # Construct the HTML list item
+        item = f'<li class="paper-item" data-category="{category}" data-year="{year}">\n'
         item += f'  <div class="title-row"><strong>{title_html}</strong></div>\n'
-        item += f'  <div class="author-row" style="color: #555;">{author} ({year})</div>\n'
+        item += f'  <div class="author-row">{author} ({year})</div>\n'
         item += f'  <div class="source-row">{source}.</div>\n'
         
-        # Add Abstract if it exists
         if abstract:
             item += f'  <details class="abstract-section">\n'
             item += f'    <summary>Abstract</summary>\n'
@@ -72,15 +73,15 @@ for entry in db.entries:
     end_tag = '</ul>'
     
     if start_tag in content and end_tag in content:
-        parts = content.split(start_tag)
-        pre_list = parts[0]
-        post_list = parts[1].split(end_tag)[1]
+        parts_before = content.split(start_tag)
+        # Fix: correctly isolate the part after the first occurrence of </ul>
+        parts_after = parts_before[1].split(end_tag, 1) 
         
-        new_content = pre_list + start_tag + "\n" + html_output + end_tag + post_list
+        final_content = parts_before[0] + start_tag + "\n" + html_output + end_tag + parts_after[1]
         
         with open('test.html', 'w', encoding='utf-8') as f:
-            f.write(new_content)
-        print(f"Success: Processed {len(entries)} papers.")
+            f.write(final_content)
+        print(f"Successfully processed {len(entries)} papers.")
     else:
         print("Error: Could not find <ul id='publications-list'> in test.html")
 
