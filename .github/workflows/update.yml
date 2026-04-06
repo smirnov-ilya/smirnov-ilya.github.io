@@ -18,6 +18,6 @@ jobs:
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add index.html
+          git add test.html
           git commit -m "Auto-update publications from bibtex" || echo "No changes"
           git push
