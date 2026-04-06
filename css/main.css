@@ -4506,3 +4506,49 @@ dl.accordion.time-line:before {
 }
 
 /*-------- end footer Area -------------*/
+
+
+.filter-container {
+    margin: 20px 0 30px 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Base button style */
+.filter-btn {
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    color: #495057;
+    padding: 8px 18px;
+    border-radius: 25px; /* Makes them pill-shaped */
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover effect */
+.filter-btn:hover {
+    background-color: #e2e6ea;
+    border-color: #dae0e5;
+}
+
+/* The 'Active' state (when a category is selected) */
+.filter-btn.active {
+    background-color: #0066cc; /* Academic Blue */
+    color: white;
+    border-color: #0056b3;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustment for small screens */
+@media (max-width: 600px) {
+    .filter-btn {
+        padding: 6px 12px;
+        font-size: 0.8rem;
+    }
+}
+
+
+

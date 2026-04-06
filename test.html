@@ -58,15 +58,28 @@ CSS
 <h4 class="pt-30">Publications</h4>
 <div class="filter-menu">
   <button onclick="filter('all')">All</button>
-  <button onclick="filter('Multiplicity theory')">AI</button>
-  <button onclick="filter('Hilbert-Kunz')">Robotics</button>
+  <button onclick="filter('multiplicity theory')">AI</button>
+  <button onclick="filter('hilbert-kunz')">Robotics</button>
 </div>
 
 <script>
-function filter(cat) {
-  document.querySelectorAll('.paper').forEach(el => {
-    el.style.display = (cat === 'all' || el.dataset.category.includes(cat)) ? 'block' : 'none';
-  });
+function filterPapers(category, clickedBtn) {
+    // 1. Remove 'active' class from all buttons and add to the clicked one
+    const buttons = document.querySelectorAll('.filter-btn');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    clickedBtn.classList.add('active');
+
+    // 2. Show/Hide papers based on data-category
+    const papers = document.querySelectorAll('.paper-item');
+    papers.forEach(paper => {
+        const paperCat = paper.getAttribute('data-category').toLowerCase();
+        
+        if (category === 'all' || paperCat.includes(category.toLowerCase())) {
+            paper.style.display = 'block';
+        } else {
+            paper.style.display = 'none';
+        }
+    });
 }
 </script>
 <ul id="publications-list">
