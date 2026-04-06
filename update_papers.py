@@ -4,7 +4,7 @@ from pylatexenc.latex2text import LatexNodes2Text
 def clean_latex(text):
     if not text:
         return ""
-       return LatexNodes2Text().latex_to_text(text)
+    return LatexNodes2Text().latex_to_text(text)
 
 def generate_html():
     # 1. Load the BibTeX file
