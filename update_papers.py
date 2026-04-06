@@ -28,8 +28,8 @@ def generate_html():
         content = f.read()
     
     # 4. Find the tags and swap the middle
-    start_tag = "<ul id="publications-list">"
-    end_tag = "</ul>"
+    start_tag = '<ul id="publications-list">'
+    end_tag = '</ul>'
     
     if start_tag in content and end_tag in content:
         parts_before = content.split(start_tag)
