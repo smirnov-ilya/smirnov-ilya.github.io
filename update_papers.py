@@ -43,7 +43,7 @@ for entry in db.entries:
         if vol: source += f", {vol}"
         if num: source += f"({num})"
         if pages: source += f", pp. {pages}"
-	if year: source += f", {year}"
+        if year: source += f", {year}"
 	
         # Category logic
         category = entry.get('keywords', 'general').lower()
