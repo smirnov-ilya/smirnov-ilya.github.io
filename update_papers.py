@@ -1,34 +1,48 @@
-name: Update Publications
 import bibtexparser
 
 def generate_html():
-    with open('papers.bib') as bibtex_file:
-        db = bibtexparser.load(bibtex_file)
+    # 1. Load the BibTeX file
+    with open('papers.bib') as bibfile:
+        db = bibtexparser.load(bibfile)
     
+    # 2. Build the HTML string
     html_output = ""
     for entry in db.entries:
-        # Create a list item with categories for filtering
-        cat = entry.get('keywords', 'general').lower()
-        year = entry.get('year', 'Unknown')
+        title = entry.get('title', 'No Title')
+        author = entry.get('author', 'Unknown Author')
+        year = entry.get('year', 'N/A')
+        journal = entry.get('journal', entry.get('booktitle', ''))
+        # Get category from keywords, default to 'general'
+        category = entry.get('keywords', 'general').lower()
         
-        html_output += f'<li class="paper" data-category="{cat}" data-year="{year}">\n'
-        html_output += f'  <strong>{entry.get("title")}</strong><br>\n'
-        html_output += f'  {entry.get("author")} ({year})<br>\n'
-        html_output += f'  <em>{entry.get("journal", entry.get("booktitle", ""))}</em>\n'
-        html_output += '</li>\n'
-    
-    # Inject into index.html
-    with open('test.html', 'r') as f:
+        # Build the HTML for one paper
+        item = '<li class="paper" data-category="' + category + '" data-year="' + year + '">\n'
+        item += '  <strong>' + title + '</strong><br>\n'
+        item += '  ' + author + ' (' + year + ')<br>\n'
+        item += '  <em>' + journal + '</em>\n'
+        item += '</li>\n'
+        html_output += item
+
+    # 3. Read your index.html
+    with open('index.html', 'r', encoding='utf-8') as f:
         content = f.read()
     
+    # 4. Find the tags and swap the middle
     start_tag = ""
     end_tag = ""
     
-    new_content = content.split(start_tag)[0] + start_tag + "\n" + html_output + end_tag + content.split(end_tag)[1]
-    
-    with open('test.html', 'w') as f:
-        f.write(new_content)
+    if start_tag in content and end_tag in content:
+        parts_before = content.split(start_tag)
+        parts_after = parts_before[1].split(end_tag)
+        
+        final_content = parts_before[0] + start_tag + "\n" + html_output + end_tag + parts_after[1]
+        
+        # 5. Save the updated file
+        with open('index.html', 'w', encoding='utf-8') as f:
+            f.write(final_content)
+        print("Success: Papers injected into index.html")
+    else:
+        print("Error: Could not find the START or END comments in index.html")
 
 if __name__ == "__main__":
     generate_html()
-
