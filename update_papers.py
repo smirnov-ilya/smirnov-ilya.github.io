@@ -23,13 +23,13 @@ def generate_html():
         item += '</li>\n'
         html_output += item
 
-    # 3. Read your index.html
-    with open('index.html', 'r', encoding='utf-8') as f:
+    # 3. Read your test.html
+    with open('test.html', 'r', encoding='utf-8') as f:
         content = f.read()
     
     # 4. Find the tags and swap the middle
-    start_tag = ""
-    end_tag = ""
+    start_tag = "<ul id="publications-list">"
+    end_tag = "</ul>"
     
     if start_tag in content and end_tag in content:
         parts_before = content.split(start_tag)
@@ -38,11 +38,11 @@ def generate_html():
         final_content = parts_before[0] + start_tag + "\n" + html_output + end_tag + parts_after[1]
         
         # 5. Save the updated file
-        with open('index.html', 'w', encoding='utf-8') as f:
+        with open('test.html', 'w', encoding='utf-8') as f:
             f.write(final_content)
-        print("Success: Papers injected into index.html")
+        print("Success: Papers injected into test.html")
     else:
-        print("Error: Could not find the START or END comments in index.html")
+        print("Error: Could not find the START or END comments in test.html")
 
 if __name__ == "__main__":
     generate_html()
