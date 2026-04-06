@@ -4550,5 +4550,46 @@ dl.accordion.time-line:before {
     }
 }
 
+.abstract-section {
+    margin-top: 8px;
+    font-size: 0.9rem;
+}
+
+.abstract-section summary {
+    cursor: pointer;
+    color: #0066cc;
+    font-weight: 500;
+    outline: none;
+    user-select: none;
+}
+
+.abstract-section summary:hover {
+    text-decoration: underline;
+}
+
+/* Style for the expanded text box */
+.abstract-text {
+    margin-top: 10px;
+    padding: 12px;
+    background-color: #f9f9f9;
+    border-left: 3px solid #0066cc;
+    color: #444;
+    line-height: 1.5;
+    font-style: italic;
+    border-radius: 0 4px 4px 0;
+}
+
+/* Remove the default arrow in some browsers if you prefer */
+.abstract-section summary::-webkit-details-marker {
+    display: none;
+}
+/* Add a custom [+] or [−] indicator */
+.abstract-section summary::before {
+    content: "[+] ";
+    font-family: monospace;
+}
+.abstract-section[open] summary::before {
+    content: "[−] ";
+}
 
 
