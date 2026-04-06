@@ -46,6 +46,7 @@ def generate_html():
         if vol: source += f", {vol}"
         if num: source += f"({num})"
         if pages: source += f", pp. {pages}"
+        if pages: source += f", {year}"
 
         # Category for filtering
         category = entry.get('keywords', 'general').lower()
@@ -53,7 +54,7 @@ def generate_html():
         # Construct the HTML list item
         item = f'<li class="paper-item" data-category="{category}" data-year="{year}">\n'
         item += f'  <div class="title-row"><strong>{title_html}</strong></div>\n'
-        item += f'  <div class="author-row">{author} ({year})</div>\n'
+        item += f'  <div class="author-row">{author}</div>\n'
         item += f'  <div class="source-row">{source}.</div>\n'
         
         if abstract:
