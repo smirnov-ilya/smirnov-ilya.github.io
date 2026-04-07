@@ -54,7 +54,7 @@ def generate_html():
         # Construct the HTML list item
         item = f'<li class="paper-item" data-category="{category}" data-year="{year}">\n'
         item += f'  <div class="title-row"><strong>{title_html}</strong></div>\n'
-        item += f'  <div class="author-row">{author}</div>\n'
+        item += f'  <div class="author-row"><b>{author}</b></div>, '
         item += f'  <div class="source-row">{source}.</div>\n'
                     
         item += '</li>\n'
@@ -65,7 +65,7 @@ def generate_html():
         content = f.read()
     
     start_tag = '<!-- Paste publications here -->'
-    end_tag = '</ul>'
+    end_tag = '<!-- End of publications here -->'
     
     if start_tag in content and end_tag in content:
         parts_before = content.split(start_tag)
