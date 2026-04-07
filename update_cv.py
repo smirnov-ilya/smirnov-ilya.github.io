@@ -6,6 +6,38 @@ def clean_latex(text):
         return ""
     return LatexNodes2Text().latex_to_text(text)
 
+def format_bibtex_authors(author_string, use_oxford_comma=True):
+    # 1. Split and reformat individual names
+    authors = author_string.split(' and ')
+    formatted_list = []
+
+    for author in authors:
+        author = author.strip()
+        if ',' in author:
+            parts = author.split(',')
+            formatted_list.append(f"{parts[1].strip()} {parts[0].strip()}")
+        else:
+            formatted_list.append(author)
+
+    # 2. Join names based on the count
+    n = len(formatted_list)
+    
+    if n == 0:
+        return ""
+    if n == 1:
+        return formatted_list[0]
+    if n == 2:
+        return f"{formatted_list[0]} and {formatted_list[1]}"
+    
+    # For 3 or more authors
+    if use_oxford_comma:
+        # Result: "Name1, Name2, and Name3"
+        return ", ".join(formatted_list[:-1]) + f", and {formatted_list[-1]}"
+    else:
+        # Result: "Name1, Name2 and Name3"
+        return ", ".join(formatted_list[:-1]) + f" and {formatted_list[-1]}"
+
+
 def generate_html():
     # 1. Load the BibTeX file
     try:
@@ -22,7 +54,7 @@ def generate_html():
     for entry in entries:
         # Basic metadata
         title = clean_latex(entry.get('title', 'No Title'))
-        author = clean_latex(entry.get('author', 'Unknown Author'))
+        author = format_bibtex_authors(clean_latex(entry.get('author', 'Unknown Author')))
         year = clean_latex(entry.get('year', 'N/A'))
         journal = clean_latex(entry.get('journal', entry.get('booktitle', '')))
         abstract = clean_latex(entry.get('abstract', ''))
@@ -54,7 +86,7 @@ def generate_html():
         # Construct the HTML list item
         item = f'<li class="paper-item" data-category="{category}" data-year="{year}">\n'
         item += f'  <div class="title-row"><strong>{title_html}</strong></div>\n'
-        item += f'  <div class="author-row"><b>{author}</b></div>, '
+        item += f'  <b>{author}</b>, '
         item += f'  <div class="source-row">{source}.</div>\n'
                     
         item += '</li>\n'
