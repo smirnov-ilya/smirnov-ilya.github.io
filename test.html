@@ -56,22 +56,22 @@ CSS
 <div class="row align-items-center justify-content-between">
 <div class="col-lg-12 pt-60">
 <h4 class="pt-30">Publications</h4>
-<div class="filter-menu">
-  <button class="filter-btn active" onclick="filterPapers('all', this)">All</button>
-  <button class="filter-btn" onclick="filterPapers('multiplicity theory', this)">Multiplicity theory</button>
-  <button class="filter-btn" onclick="filterPapers('hilbert-kunz', this)">Hilbert-Kunz theory</button>
-</div>
-
-<div id="category-description" style="margin-top: 15px; font-style: italic; color: #555; min-height: 1.5em;">
+<div id="category-description" style="margin: 20px 0; padding: 10px; border-left: 3px solid #ccc; line-height: 1.6;">
   Showing all publications.
 </div>
 
 <script>
-// Define your descriptions here
+// Now you can use HTML tags like <strong>, <em>, and <a href="...">
 const categoryDescriptions = {
-    'all': <b>'Showing all publications.'</b>,
-    'multiplicity theory': 'Papers focusing on the study of multiplicities in local rings, including Hilbert-Samuel and generalized multiplicities.',
-    'hilbert-kunz': 'Research regarding Hilbert-Kunz multiplicity and functions in characteristic p > 0.'
+    'all': 'Showing all publications.',
+    
+    'multiplicity theory': `Papers focusing on the study of <strong>multiplicities</strong> in local rings. 
+                            This includes the classical <em>Hilbert-Samuel</em> multiplicity and its 
+                            modern generalizations. See <a href="#">this review</a> for context.`,
+                            
+    'hilbert-kunz': `Research regarding <strong>Hilbert-Kunz multiplicity</strong>. 
+                     This theory is specific to rings of characteristic $p > 0$ and involves 
+                     the study of the growth of Frobenius powers.`
 };
 
 function filterPapers(category, clickedBtn) {
@@ -80,17 +80,19 @@ function filterPapers(category, clickedBtn) {
     buttons.forEach(btn => btn.classList.remove('active'));
     clickedBtn.classList.add('active');
 
-    // 2. Update the description text
+    // 2. Update the description using innerHTML
     const descElement = document.getElementById('category-description');
-    // We use the category string to find the correct text in our object
-    descElement.textContent = categoryDescriptions[category.toLowerCase()] || "";
+    const selectedCategory = category.toLowerCase();
+    
+    // We use innerHTML so the browser parses the tags (like <strong> or <a>)
+    descElement.innerHTML = categoryDescriptions[selectedCategory] || "";
 
     // 3. Show/Hide papers based on data-category
     const papers = document.querySelectorAll('.paper-item');
     papers.forEach(paper => {
         const paperCat = paper.getAttribute('data-category').toLowerCase();
         
-        if (category === 'all' || paperCat.includes(category.toLowerCase())) {
+        if (category === 'all' || paperCat.includes(selectedCategory)) {
             paper.style.display = 'block';
         } else {
             paper.style.display = 'none';
