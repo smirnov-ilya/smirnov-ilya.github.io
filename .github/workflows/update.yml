@@ -2,6 +2,7 @@ on:
   push:
     paths:
       - 'papers.bib' # Only run when this file changes
+      - 'preprints.bib' # Only run when this file changes	
 jobs:
   build:
     runs-on: ubuntu-latest
