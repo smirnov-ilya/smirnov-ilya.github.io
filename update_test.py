@@ -84,18 +84,20 @@ def generate_html():
         category = entry.get('keywords', 'general').lower()
         
         # Construct the HTML list item
-        item = f'<dt class="paper-item" data-category="{category}" data-year="{year}">\n'
-        item += f'  <div class="title-row"><strong>{title_html}</strong></div></dt>\n'
-        item += f'  <dd><div class="author-row">{author}</div>\n'
+        item = f'<li class="paper-item" data-category="{category}" data-year="{year}">\n'
+        item += f'  <div class="title-row"><strong>{title_html}</strong>&ensp;<details class="abstract-section">\n'
+        item += f'    <summary>Expand</summary>\n'
+        item += f'  <div class="author-row">{author}</div>\n'
         item += f'  <div class="source-row">{source}.</div>\n'
-        
+
         if abstract:
-            item += f'  <details class="abstract-section">\n'
-            item += f'    <summary>Abstract</summary>\n'
             item += f'    <div class="abstract-text">{abstract}</div>\n'
-            item += f'  </details>\n'
+
+        item += f'  </div>\n'
+        item += f'  </details>\n'
+
             
-        item += '</dd>\n'
+        item += '</li>\n'
         html_output += item
 
     # 2. Inject into test.html
