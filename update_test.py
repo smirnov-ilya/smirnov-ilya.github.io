@@ -85,8 +85,7 @@ def generate_html():
         
         # Construct the HTML list item
         item = f'<li class="paper-item" data-category="{category}" data-year="{year}">\n'
-        item += f'  <div class="title-row"><strong>{title_html}</strong>&ensp;<details class="abstract-section">\n'
-        item += f'    <summary>Expand</summary>\n'
+        item += f'  <div class="title-row"><strong>{title_html}</strong>&ensp;<details class="abstract-section"><summary>Expand</summary>\n'
         item += f'  <div class="author-row">{author}</div>\n'
         item += f'  <div class="source-row">{source}.</div>\n'
 
