@@ -85,25 +85,25 @@ def generate_html():
         
         # Construct the HTML list item
         item = f'<li class="paper-item" data-category="{category}" data-year="{year}">\n'
-        item += f'  <div class="title-row"><strong>{title_html}</strong></div>\n'
-        item += f'  <div class="author-row">{author}</div>\n'
+        item += f'  <div class="title-row"><strong>{title_html}</strong>&ensp;<details class="abstract-section"><summary>Expand</summary>\n'
+        item += f'  <div class="author-row"><strong>{author}</strong></div>\n'
         item += f'  <div class="source-row">{source}.</div>\n'
-        
+
         if abstract:
-            item += f'  <details class="abstract-section">\n'
-            item += f'    <summary>Abstract</summary>\n'
             item += f'    <div class="abstract-text">{abstract}</div>\n'
-            item += f'  </details>\n'
+
+        item += f'  </div></details>\n'
+
             
         item += '</li>\n'
         html_output += item
 
-    # 2. Inject into test.html
-    with open('test.html', 'r', encoding='utf-8') as f:
+    # 2. Inject into research.html
+    with open('research.html', 'r', encoding='utf-8') as f:
         content = f.read()
     
-    start_tag = '<ul id="publications-list">'
-    end_tag = '</ul>'
+    start_tag = '<!-- Start publications -->'
+    end_tag = '<!-- End publications -->'
     
     if start_tag in content and end_tag in content:
         parts_before = content.split(start_tag)
@@ -112,11 +112,11 @@ def generate_html():
         
         final_content = parts_before[0] + start_tag + "\n" + html_output + end_tag + parts_after[1]
         
-        with open('test.html', 'w', encoding='utf-8') as f:
+        with open('research.html', 'w', encoding='utf-8') as f:
             f.write(final_content)
         print(f"Successfully processed {len(entries)} papers.")
     else:
-        print("Error: Could not find <ul id='publications-list'> in test.html")
+        print("Error: Could not find <ul id='publications-list'> in research.html")
 
 if __name__ == "__main__":
     generate_html()
