@@ -14,16 +14,13 @@ jobs:
       - name: Install dependencies
         run: pip install bibtexparser pylatexenc
       - name: Run update script
-        run: python update_cv.py
-      - name: Commit changes
         run: |
-      - name: Run second update script
-        run: python update_research.py
+	python update_cv.py
+	python update_research.py
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
-          git add cv.html
-          git add research.html		
+          git add cv.html research.html		
           git commit -m "Auto-update publications from bibtex" || echo "No changes"
           git push
