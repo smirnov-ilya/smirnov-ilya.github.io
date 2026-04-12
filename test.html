@@ -59,7 +59,7 @@ CSS
 <div class="filter-menu">
   <button class="filter-btn active" onclick="filterPapers('all', this)">All</button>
   <button class="filter-btn" onclick="filterPapers('multiplicity theory', this)">Multiplicity theory</button>
-  <button class="filter-btn" onclick="filterPapers('hilbert-kunz', this)">Hilbert-Kunz theory</button>
+  <button class="filter-btn" onclick="filterPapers('hilbert-kunz', this)">Frobenius-derived invariants</button>
 </div>
 
 <div id="category-description" style="margin: 20px 0; padding: 10px; border-left: 3px solid #ccc; line-height: 1.6;">
@@ -75,11 +75,11 @@ const categoryDescriptions = {
 The research in this section is broadly motivated by one question: how does relation between multiplicity and colength of ideals
 affect singularity? The starting point is Lech's inequality
 that asserts that e(I) ≤ d! e(R) col(I). However, this is never sharp
-and we are led to many possible directions. </p>`,
+and we are led to many possible directions. </p>`
                             
-    'hilbert-kunz': `Research regarding <strong>Hilbert-Kunz multiplicity</strong>. 
-                     This theory is specific to rings of characteristic $p > 0$ and involves 
-                     the study of the growth of Frobenius powers.`
+    'hilbert-kunz': `<p class="text-left">These papers are focused on the use of Frobenius in local algebra and its use to measure singularities. 
+The main example is Hilbert-Kunz multiplicity, which provides a multiplicity theory native to positive characteristic. I am interested in its properties as a
+measure of singularity. </p>` 
 };
 
 function filterPapers(category, clickedBtn) {
