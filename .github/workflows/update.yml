@@ -15,8 +15,8 @@ jobs:
         run: pip install bibtexparser pylatexenc
       - name: Run update script
         run: |
-	python update_cv.py
-	python update_research.py
+	  python update_cv.py
+	  python update_research.py
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
