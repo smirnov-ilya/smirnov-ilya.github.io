@@ -4513,6 +4513,7 @@ dl.accordion.time-line:before {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+    text-align: center
 }
 
 /* Base button style */
