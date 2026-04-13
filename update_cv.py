@@ -54,12 +54,12 @@ def generate_html():
         return
 
     # Sort entries by year (newest first)
-    entries = sorted(db.entries, key=lambda x: x.get('year', '0'), reverse=True)
+    papers = sorted(db.entries, key=lambda x: x.get('year', '0'), reverse=True)
     preprints = sorted(prepdb.entries, key=lambda x: x.get('year', '0'), reverse=True)
 
     html_output = ""
     second_html_output = ""
-    for entry in entries:
+    for entry in papers:
         # Basic metadata
         title = clean_latex(entry.get('title', 'No Title'))
         author = format_bibtex_authors(clean_latex(entry.get('author', 'Unknown Author')))
@@ -75,7 +75,17 @@ def generate_html():
             title_html = f'<a href="{link}" target="_blank" class="paper-title">{title}</a>'
         else:
             title_html = title
-
+        # Category for filtering
+        category = entry.get('keywords', 'general').lower()
+        
+        # Construct the HTML list item
+        item = f'<li class="paper-item" data-category="{category}" data-year="{year}">\n'
+        item += f'  <div class="title-row"><strong>{title_html}</strong></div>\n'
+        item += f'  <b>{author}</b>.\n'
+                    
+        item += '</li>\n'
+        html_output += item
+    
     for entry in preprints:
         # Basic metadata
         title = clean_latex(entry.get('title', 'No Title'))
