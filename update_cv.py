@@ -80,7 +80,7 @@ def generate_html():
         # Basic metadata
         title = clean_latex(entry.get('title', 'No Title'))
         author = format_bibtex_authors(clean_latex(entry.get('author', 'Unknown Author')))
-        abstract = clean_latex(entry.get('abstract', ''))
+        
         
         # Link Logic
         arxiv_id = entry.get('eprint', '')
