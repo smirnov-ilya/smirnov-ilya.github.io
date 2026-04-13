@@ -129,7 +129,7 @@ def generate_html():
         
         with open('cv.html', 'w', encoding='utf-8') as f:
             f.write(final_content)
-        print(f"Successfully processed {len(entries)} papers.")
+        print(f"Successfully processed {len(papers)} papers.")
     else:
         print("Error: Could not find <!-- Paste publications here --> in cv.html")
 
