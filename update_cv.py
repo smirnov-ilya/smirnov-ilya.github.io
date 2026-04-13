@@ -122,13 +122,13 @@ def generate_html():
     
     if start_tag in content and end_tag in content:
         parts_before = content.split(start_tag)
-        # Fix: correctly isolate the part after the first occurrence of </ul>
+        # Fix: correctly isolate the part after the start
         parts_after = parts_before[1].split(end_tag, 1) 
         
-        final_content = parts_before[0] + start_tag + "\n" + html_output + end_tag + parts_after[1]
+        changed_content = parts_before[0] + start_tag + "\n" + html_output + end_tag + parts_after[1]
         
         with open('cv.html', 'w', encoding='utf-8') as f:
-            f.write(final_content)
+            f.write(changed_content)
         print(f"Successfully processed {len(papers)} papers.")
     else:
         print("Error: Could not find <!-- Paste publications here --> in cv.html")
@@ -137,7 +137,7 @@ def generate_html():
     end_tag = '<!-- End of preprints -->'
     
     if start_tag in content and end_tag in content:
-        parts_before = content.split(start_tag)
+        parts_before = changed_content.split(start_tag)
         # Fix: correctly isolate the part after the first occurrence of </ul>
         parts_after = parts_before[1].split(end_tag, 1) 
         
