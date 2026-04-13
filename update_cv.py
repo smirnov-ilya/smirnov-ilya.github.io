@@ -65,7 +65,6 @@ def generate_html():
         author = format_bibtex_authors(clean_latex(entry.get('author', 'Unknown Author')))
         year = clean_latex(entry.get('year', 'N/A'))
         journal = clean_latex(entry.get('journal', entry.get('booktitle', '')))
-        abstract = clean_latex(entry.get('abstract', ''))
         
         # Link Logic
         arxiv_id = entry.get('eprint', '')
