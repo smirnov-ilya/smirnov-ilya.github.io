@@ -79,9 +79,12 @@ def generate_html():
         vol = entry.get('volume', '')
         num = entry.get('number', '')
         pages = entry.get('pages', '').replace('--', '-')
+        series = entry.get('series', '')
         
         source = f"<em>{journal}</em>"
-        if vol: source += f", {vol}"
+        if vol:
+            if series: source += f", volume {vol} of {series}"
+            else: source += f", {vol}"
         if num: source += f"({num})"
         if pages: source += f", pp. {pages}"
         if pages: source += f", {year}"
