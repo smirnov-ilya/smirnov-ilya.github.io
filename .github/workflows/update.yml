@@ -13,10 +13,10 @@ jobs:
         with: { python-version: '3.x' }
       - name: Install dependencies
         run: pip install bibtexparser pylatexenc
-      - name: Run update script
-        run: python update_cv.py
-      - name: Run second update script
-        run: python update_research.py
+      - name: Run update scripts
+        run: | 
+          python update_cv.py
+          python update_research.py
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
